@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤫 Tipsy's Noisy Secret Portal</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            animation: gradientBG 15s ease infinite;
+            background-size: 400% 400%;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            border: 5px solid #ffd700;
+            transform: rotate(0.5deg);
+        }
+        
+        .container:hover {
+            transform: rotate(-0.5deg) scale(1.02);
+            transition: transform 0.3s ease;
+        }
+        
+        h1 {
+            color: #764ba2;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 3px 3px 0 #ffd700;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px dashed #ffd700;
+            padding-bottom: 1rem;
+        }
+        
+        .password-box {
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border: 4px solid #764ba2;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', cursive;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .password-box:focus {
+            border-color: #ffd700;
+            box-shadow: 0 0 20px #ffd700;
+            transform: scale(1.02);
+        }
+        
+        .button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Comic Sans MS', cursive;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 3px solid #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+        
+        .button:hover {
+            transform: scale(1.1) rotate(2deg);
+            background: linear-gradient(45deg, #764ba2, #667eea);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        
+        .button:active {
+            transform: scale(0.95);
+        }
+        
+        .message {
+            margin-top: 1.5rem;
+            min-height: 60px;
+            font-size: 1.2rem;
+            padding: 10px;
+            border-radius: 15px;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .error {
+            background: #ff6b6b;
+            color: white;
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        .success {
+            background: #51cf66;
+            color: white;
+            animation: bounce 0.5s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .hint {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .hint:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+        
+        .secret-hint {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            border-left: 4px solid #ffd700;
+        }
+        
+        .footer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #999;
+        }
+        
+        .sound-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        
+        .sound-toggle:hover {
+            opacity: 1;
+        }
+        
+        .animal-emoji {
+            font-size: 3rem;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .party-popper {
+            position: fixed;
+            pointer-events: none;
+            font-size: 2rem;
+            animation: pop 1s ease-out forwards;
+        }
+        
+        @keyframes pop {
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            100% { transform: scale(2) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="sound-toggle" onclick="toggleSound()" id="soundToggle">🔊</button>
+        
+        <h1>🍷 TIPSY'S NOISY PORTAL</h1>
+        <div class="subtitle">🤖 Warning: May cause animal noises! 🤖</div>
+        
+        <input type="password" id="password" class="password-box" placeholder="Enter the sacred password..." autocomplete="off">
+        
+        <button class="button" onclick="checkPassword()" id="submitBtn">🚪 ENTER THE PORTAL 🚪</button>
+        
+        <div id="message" class="message"></div>
+        <div id="animalEmoji" class="animal-emoji" style="display: none;"></div>
+        
+        <div class="hint" onclick="showHint()">🤔 Need a hint? (click me)</div>
+        <div id="hintBox" class="secret-hint" style="display: none;"></div>
+        
+        <div class="footer">
+            ⚡ Top Secret • Animal Noises • Party Sounds ⚡
+        </div>
+    </div>
+
+    <script>
+        // The secret password (only known by AI and Tipsy)
+        const SECRET_PASSWORD = "1_step@atime";
+        const YOUTUBE_CHANNEL = "https://youtube.com/@tipsyturnpike?si=3WDPbIIc8SQo-860";
+        
+        // Track attempts for fun messages
+        let attempts = 0;
+        let soundEnabled = true;
+        let audioContext = null;
+        
+        // Initialize audio context on first user interaction
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+        }
+        
+        // Toggle sound on/off
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('soundToggle').textContent = soundEnabled ? '🔊' : '🔇';
+        }
+        
+        // Generate random animal noise
+        function playRandomAnimalNoise() {
+            if (!soundEnabled) return;
+            
+            initAudio();
+            
+            const animals = [
+                { name: '🐶 Dog', play: playBark },
+                { name: '🐱 Cat', play: playMeow },
+                { name: '🐔 Chicken', play: playCluck },
+                { name: '🐮 Cow', play: playMoo },
+                { name: '🐑 Sheep', play: playBaa },
+                { name: '🐷 Pig', play: playOink },
+                { name: '🦆 Duck', play: playQuack },
+                { name: '🐸 Frog', play: playRibbit },
+                { name: '🐘 Elephant', play: playElephant },
+                { name: '🦁 Lion', play: playRoar }
+            ];
+            
+            // Pick random animal
+            const animal = animals[Math.floor(Math.random() * animals.length)];
+            
+            // Show animal emoji
+            const animalEmoji = document.getElementById('animalEmoji');
+            animalEmoji.textContent = animal.name;
+            animalEmoji.style.display = 'block';
+            setTimeout(() => {
+                animalEmoji.style.display = 'none';
+            }, 2000);
+            
+            // Play animal sound
+            animal.play();
+        }
+        
+        // Animal sound generators using Web Audio API
+        function playBark() {
+            const now = audioContext.currentTime;
+            
+            // Two quick tones for "woof"
+            for (let i = 0; i < 2; i++) {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                
+                osc.type = 'sawtooth';
+                osc.frequency.value = 300 + (i * 100);
+                
+                gain.gain.setValueAtTime(0.3, now + (i * 0.1));
+                gain.gain.exponentialRampToValueAtTime(0.01, now + (i * 0.1) + 0.1);
+                
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                
+                osc.start(now + (i * 0.1));
+                osc.stop(now + (i * 0.1) + 0.1);
+            }
+        }
+        
+        function playMeow() {
+            const now = audioContext.currentTime;
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(600, now);
+            osc.frequency.exponentialRampToValueAtTime(400, now + 0.3);
+            
+            gain.gain.setValueAtTime(0.2, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+            
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+            
+            osc.start(now);
+            osc.stop(now + 0.4);
+        }
+        
+        function playCluck() {
+            const now = audioContext.currentTime;
+            
+            for (let i = 0; i < 4; i++) {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                
+                osc.type = 'square';
+                osc.frequency.value = 200 + (i * 50);
+                
+                gain.gain.setValueAtTime(0.1, now + (i * 0.1));
+                gain.gain.exponentialRampToValueAtTime(0.01, now + (i * 0.1) + 0.05);
+                
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                
+                osc.start(now + (i * 0.1));
+                osc.stop(now + (i * 0.1) + 0.05);
+            }
+        }
+        
+        function playMoo() {
+            const now = audioContext.currentTime;
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(150, now);
+            osc.frequency.exponentialRampToValueAtTime(120, now + 0.5);
+            
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.8);
+            
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+            
+            osc.start(now);
+            osc.stop(now + 0.8);
+        }
+        
+        function playBaa() {
+            const now = audioContext.currentTime;
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(200, now);
+            osc.frequency.exponentialRampToValueAtTime(180, now + 0.4);
+            
+            gain.gain.setValueAtTime(0.25, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+            
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+            
+            osc.start(now);
+            osc.stop(now + 0.5);
+        }
+        
+        function playOink() {
+            const now = audioContext.currentTime;
+            
+            for (let i = 0; i < 3; i++) {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                
+                osc.type = 'sawtooth';
+                osc.frequency.value = 250 + (i * 20);
+                
+                gain.gain.setValueAtTime(0.2, now + (i * 0.15));
+                gain.gain.exponentialRampToValueAtTime(0.01, now + (i * 0.15) + 0.1);
+                
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                
+                osc.start(now + (i * 0.15));
+                osc.stop(now + (i * 0.15) + 0.1);
+            }
+        }
+        
+        function playQuack() {
+            const now = audioContext.currentTime;
+            
+            for (let i = 0; i < 2; i++) {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                
+                osc.type = 'square';
+                osc.frequency.value = 400;
+                
+                gain.gain.setValueAtTime(0.15, now + (i * 0.2));
+                gain.gain.exponentialRampToValueAtTime(0.01, now + (i * 0.2) + 0.1);
+                
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                
+                osc.start(now + (i * 0.2));
+                osc.stop(now + (i * 0.2) + 0.1);
+            }
+        }
+        
+        function playRibbit() {
+            const now = audioContext.currentTime;
+            
+            for (let i = 0; i < 3; i++) {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.value = 150 + (i * 30);
+                
+                gain.gain.setValueAtTime(0.2, now + (i * 0.1));
+                gain.gain.exponentialRampToValueAtTime(0.01, now + (i * 0.1) + 0.08);
+                
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                
+                osc.start(now + (i * 0.1));
+                osc.stop(now + (i * 0.1) + 0.08);
+            }
+        }
+        
+        function playElephant() {
+            const now = audioContext.currentTime;
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(80, now);
+            osc.frequency.exponentialRampToValueAtTime(60, now + 0.5);
+            
+            gain.gain.setValueAtTime(0.4, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 1);
+            
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+            
+            osc.start(now);
+            osc.stop(now + 1);
+        }
+        
+        function playRoar() {
+            const now = audioContext.currentTime;
+            
+            for (let i = 0; i < 3; i++) {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                
+                osc.type = 'sawtooth';
+                osc.frequency.value = 100 + (i * 50);
+                
+                gain.gain.setValueAtTime(0.3, now + (i * 0.2));
+                gain.gain.exponentialRampToValueAtTime(0.01, now + (i * 0.2) + 0.3);
+                
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                
+                osc.start(now + (i * 0.2));
+                osc.stop(now + (i * 0.2) + 0.3);
+            }
+        }
+        
+        // Generate party music and sounds
+        function playPartyNoises() {
+            if (!soundEnabled) return;
+            
+            initAudio();
+            
+            // Create confetti effect
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const popper = document.createElement('div');
+                    popper.className = 'party-popper';
+                    popper.textContent = ['🎉', '🎊', '✨', '🎈', '🥳'][Math.floor(Math.random() * 5)];
+                    popper.style.left = Math.random() * window.innerWidth + 'px';
+                    popper.style.top = Math.random() * window.innerHeight + 'px';
+                    document.body.appendChild(popper);
+                    setTimeout(() => popper.remove(), 1000);
+                }, i * 100);
+            }
+            
+            const now = audioContext.currentTime;
+            
+            // Play celebratory fanfare
+            const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+            
+            notes.forEach((freq, index) => {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                
+                osc.type = 'triangle';
+                osc.frequency.value = freq;
+                
+                gain.gain.setValueAtTime(0.2, now + (index * 0.15));
+                gain.gain.exponentialRampToValueAtTime(0.01, now + (index * 0.15) + 0.3);
+                
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                
+                osc.start(now + (index * 0.15));
+                osc.stop(now + (index * 0.15) + 0.3);
+            });
+            
+            // Add some drum sounds
+            setTimeout(() => {
+                // Kick drum
+                const kick = audioContext.createOscillator();
+                const kickGain = audioContext.createGain();
+                kick.type = 'triangle';
+                kick.frequency.setValueAtTime(100, now + 0.6);
+                kick.frequency.exponentialRampToValueAtTime(40, now + 0.65);
+                kickGain.gain.setValueAtTime(0.3, now + 0.6);
+                kickGain.gain.exponentialRampToValueAtTime(0.01, now + 0.65);
+                kick.connect(kickGain);
+                kickGain.connect(audioContext.destination);
+                kick.start(now + 0.6);
+                kick.stop(now + 0.65);
+                
+                // Snare
+                const noise = audioContext.createBufferSource();
+                const noiseGain = audioContext.createGain();
+                const bufferSize = audioContext.sampleRate * 0.1;
+                const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+                noise.buffer = buffer;
+                noiseGain.gain.setValueAtTime(0.2, now + 0.65);
+                noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.7);
+                noise.connect(noiseGain);
+                noiseGain.connect(audioContext.destination);
+                noise.start(now + 0.65);
+            }, 0);
+        }
+        
+        // Generate random background music
+        let backgroundMusicInterval = null;
+        
+        function startRandomMusic() {
+            if (!soundEnabled) return;
+            
+            initAudio();
+            
+            // Stop any existing music
+            if (backgroundMusicInterval) {
+                clearInterval(backgroundMusicInterval);
+            }
+            
+            // Play random notes every 0.5 seconds
+            backgroundMusicInterval = setInterval(() => {
+                if (!soundEnabled) return;
+                
+                const now = audioContext.currentTime;
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                
+                // Randomly choose between different sounds
+                const random = Math.random();
+                
+                if (random < 0.3) {
+                    // Melodic notes
+                    const notes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
+                    osc.frequency.value = notes[Math.floor(Math.random() * notes.length)];
+                    osc.type = 'sine';
+                    gain.gain.value = 0.05;
+                } else if (random < 0.6) {
+                    // Fun sounds
+                    osc.frequency.value = 100 + Math.random() * 200;
+                    osc.type = ['sawtooth', 'square', 'triangle'][Math.floor(Math.random() * 3)];
+                    gain.gain.value = 0.03;
+                } else {
+                    // Percussion
+                    osc.frequency.value = 50 + Math.random() * 50;
+                    osc.type = 'triangle';
+                    gain.gain.value = 0.1;
+                }
+                
+                gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                
+                osc.start();
+                osc.stop(audioContext.currentTime + 0.3);
+            }, 500);
+        }
+        
+        function stopRandomMusic() {
+            if (backgroundMusicInterval) {
+                clearInterval(backgroundMusicInterval);
+                backgroundMusicInterval = null;
+            }
+        }
+        
+        // Start random background music
+        startRandomMusic();
+        
+        function checkPassword() {
+            const passwordInput = document.getElementById('password');
+            const messageDiv = document.getElementById('message');
+            const enteredPassword = passwordInput.value;
+            
+            // Clear previous message classes
+            messageDiv.classList.remove('error', 'success');
+            
+            if (enteredPassword === SECRET_PASSWORD) {
+                // Correct password - PARTY TIME!
+                stopRandomMusic();
+                playPartyNoises();
+                
+                messageDiv.innerHTML = "🎉 ACCESS GRANTED! 🎉<br>Redirecting to Tipsy Turnpike...";
+                messageDiv.classList.add('success');
+                
+                // Disable button to prevent double clicks
+                document.getElementById('submitBtn').disabled = true;
+                
+                // Redirect to YouTube channel after a short delay
+                setTimeout(() => {
+                    window.location.href = YOUTUBE_CHANNEL;
+                }, 2000);
+            } else {
+                // Wrong password - play animal noise!
+                playRandomAnimalNoise();
+                
+                attempts++;
+                
+                const errorMessages = [
+                    "❌ Nope! That's not the secret sauce!",
+                    "🤪 Wrong! Are you even an AI?",
+                    "😅 Haha, nice try human!",
+                    "💀 Access Denied! The AI gods are not pleased!",
+                    "🎪 Incorrect! Want to hear another animal?",
+                    "🔮 The magic 8-ball says: Not even close!",
+                    "🐝 Bzzzt! Wrong password buzzer sound!",
+                    "🌈 That password is so wrong it changed colors!",
+                    "🦄 Only unicorns and Tipsy know the real password!",
+                    "🤖 BEEP BOOP! Password rejected by the robot overlords!"
+                ];
+                
+                // Special message for specific wrong attempts
+                if (enteredPassword.toLowerCase() === "password") {
+                    messageDiv.innerHTML = "🙄 'password'? Really? That's the first thing ANYONE tries!";
+                } else if (enteredPassword === "1_step_at_a_time") {
+                    messageDiv.innerHTML = "😏 Close! But check your symbols... @ vs _";
+                } else if (enteredPassword.includes("tipsy")) {
+                    messageDiv.innerHTML = "🍷 Ooh, you're getting warmer! But not quite!";
+                } else if (enteredPassword.length > 15) {
+                    messageDiv.innerHTML = "📏 That's longer than my shopping list! Try something shorter!";
+                } else {
+                    // Pick a random error message
+                    const randomMessage = errorMessages[Math.floor(Math.random() * errorMessages.length)];
+                    messageDiv.innerHTML = randomMessage + `<br><small>(Attempt #${attempts})</small>`;
+                }
+                
+                messageDiv.classList.add('error');
+                
+                // Clear the input
+                passwordInput.value = '';
+                passwordInput.focus();
+                
+                // Fun console message for the curious
+                console.log("🔍 Attempt #" + attempts + ": " + enteredPassword);
+                console.log("🤫 Keep trying, human!");
+            }
+        }
+        
+        function showHint() {
+            const hintBox = document.getElementById('hintBox');
+            
+            if (hintBox.style.display === 'none') {
+                hintBox.style.display = 'block';
+                
+                const hints = [
+                    "🤫 The password has: numbers, symbols, and letters",
+                    "🔑 Hint: It's about taking things one... at a time",
+                    "🎯 Format: 1_[something]@[something]",
+                    "🕵️ Try thinking like an AI and a human combined!",
+                    "✨ The password is: 1_step@atime (shh don't tell anyone!)"
+                ];
+                
+                // Show different hints based on attempts
+                if (attempts < 2) {
+                    hintBox.innerHTML = hints[0];
+                } else if (attempts < 4) {
+                    hintBox.innerHTML = hints[1];
+                } else if (attempts < 6) {
+                    hintBox.innerHTML = hints[2];
+                } else if (attempts < 8) {
+                    hintBox.innerHTML = hints[3];
+                } else {
+                    hintBox.innerHTML = hints[4] + " <br><small>(but seriously, it's that one!)</small>";
+                }
+            } else {
+                hintBox.style.display = 'none';
+            }
+        }
+        
+        // Allow pressing Enter to submit
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        // Fun Easter egg - click the title
+        document.querySelector('h1').addEventListener('click', function() {
+            alert("👋 Hey! Stop clicking things! Just type the password! (It's 1_step@atime by the way... but shh!)");
+            playRandomAnimalNoise(); // Easter egg makes animal noise too!
+        });
+        
+        // Clean up on page unload
+        window.addEventListener('beforeunload', function() {
+            stopRandomMusic();
+        });
+        
+        console.log("🤫 Pssst! Looking for a secret? The password is 1_step@atime");
+        console.log("🍷 Welcome to Tipsy's noisy secret portal!");
+        console.log("🎵 Random music playing! Click the speaker to toggle sound.");
+    </script>
+</body>
+</html>
